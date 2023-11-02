@@ -35,23 +35,15 @@ pipeline {
                 }
             }
 		}
-		
-		stage('Docker Build and Upload to registry') {
-			agent {
-				kubernetes {
-					label 'dind-agent' // Label for the Kubernetes agent with Docker support
+		stage('Upload') {
+			dir('build/'){
+				withAWS(region:'us-east-1',credentials:'Jenkins') {
+					def identity=awsIdentity();
+					// Upload files from working directory to project workspace
+					s3Upload(bucket:"scp-demo-ou", workingDir:'/', includePathPattern:'**/*');
 				}
-			}
-			steps {
-				container('dind-agent') {
-				    checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/StephenGrider/docker-react.git']]])
-                    script {
-                            echo "Bulding docker images"
-                        docker.build(
-                            "asikrasool/reactapp:latest")
-                    }
-			    }
-			}
-		}
+
+			};
+    	}
 	}
 }
