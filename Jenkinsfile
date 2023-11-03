@@ -35,18 +35,18 @@ pipeline {
                 }
             }
 		}
-		stage('Upload') {
-			steps{
-				dir('build/'){
-					withAWS(region:'us-east-1',credentials:'jenkins_manual') {
-						// def identity=awsIdentity();
-						// Upload files from working directory to project workspace
-						s3Upload(bucket:"scp-demo-ou", workingDir:'/', includePathPattern:'**/*');
-					}
+		// stage('Upload') {
+		// 	steps{
+		// 		dir('build/'){
+		// 			withAWS(region:'us-east-1',credentials:'jenkins_manual') {
+		// 				// def identity=awsIdentity();
+		// 				// Upload files from working directory to project workspace
+		// 				s3Upload(bucket:"scp-demo-ou", workingDir:'/', includePathPattern:'**/*');
+		// 			}
 
-				};
-    		}
-		}
+		// 		};
+    	// 	}
+		// }
 	}
 	post {
 		always {
