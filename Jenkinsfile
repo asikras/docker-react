@@ -38,7 +38,7 @@ pipeline {
 		stage('Upload') {
 			steps {
 				dir('build/'){
-					pwd();
+					// pwd();
 					withAWS(region:'us-east-1',credentials:'jenkins_manual') {
 						s3Upload(bucket:"scp-demo-ou", path:'build/, workingDir:'/', includePathPattern:'**/*')
 					}
