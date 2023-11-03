@@ -36,19 +36,15 @@ pipeline {
             }
 		}
 		stage('Upload') {
-			steps{
+			steps {
 				dir('build/'){
 					pwd();
 					withAWS(region:'us-east-1',credentials:'jenkins_manual') {
-						// def identity=awsIdentity();
-						// Upload files from working directory to project workspace
-						s3Upload(bucket:"scp-demo-ou", path:'build/, workingDir:'/', includePathPattern:'**/*');
+						s3Upload(bucket:"scp-demo-ou", path:'build/, workingDir:'/', includePathPattern:'**/*')
 					}
-
-				};
+				}
     		}
 		}
-	}
 	post {
 		always {
 			archiveArtifacts artifacts: 'build/'
