@@ -40,7 +40,7 @@ pipeline {
 				dir('build/'){
 					pwd();
 					withAWS(region:'us-east-1',credentials:'jenkins_manual') {
-						s3Upload(bucket:"scp-demo-ou", path:'build/, workingDir:'/', includePathPattern:'**/*');
+						s3Upload(bucket:"scp-demo-ou", path:'build/', workingDir:'/', includePathPattern:'**/*');
 					}
 				};
     		}
