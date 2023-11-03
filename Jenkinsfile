@@ -36,14 +36,16 @@ pipeline {
             }
 		}
 		stage('Upload') {
-			dir('build/'){
-				withAWS(region:'us-east-1',credentials:'Jenkins') {
-					def identity=awsIdentity();
-					// Upload files from working directory to project workspace
-					s3Upload(bucket:"scp-demo-ou", workingDir:'/', includePathPattern:'**/*');
-				}
+			steps{
+				dir('build/'){
+					withAWS(region:'us-east-1',credentials:'Jenkins') {
+						def identity=awsIdentity();
+						// Upload files from working directory to project workspace
+						s3Upload(bucket:"scp-demo-ou", workingDir:'/', includePathPattern:'**/*');
+					}
 
-			};
-    	}
+				};
+    		}
+		}
 	}
 }
