@@ -37,12 +37,15 @@ pipeline {
 		}
 		stage('Upload') {
 			steps {
-				dir('build/'){
-					pwd();
-					withAWS(region:'us-east-1',credentials:'jenkins_manual') {
-						s3Upload(bucket:"scp-demo-ou", path:'build/', workingDir:'/', includePathPattern:'**/*');
-					}
-				};
+				// dir('build/'){
+				// 	pwd();
+				// 	withAWS(region:'us-east-1',credentials:'jenkins_manual') {
+				// 		s3Upload(bucket:"scp-demo-ou", path:'build/', workingDir:'/', includePathPattern:'**/*');
+				// 	}
+				// };
+				withAWS(region:'us-west-2',credentials:'jenkins_manual') {
+				sh 'echo "Uploading content with AWS creds"'
+					s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'build/', bucket:'jenkins-s3-bucket-wach')
     		}
 		}
 	}
