@@ -44,7 +44,7 @@ pipeline {
 				// 	}
 				// };
 				withAWS(region:'us-east-1',credentials:'jenkins_manual') {
-				sh 'tar -czf build/ build/artifacts.tar.gz'
+				sh 'tar -czvf artifacts.tar.gz build/'
 					s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'build/artifacts.tar.gz', bucket:'scp-demo-ou')
 				}
     		}
